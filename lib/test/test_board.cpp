@@ -4,7 +4,7 @@
 
 SCENARIO("Neighbour coordinate calculation", "[Board]")
 {
-  GIVEN("An empty board") {
+  GIVEN("an empty board") {
     Board board(0, 0);
     
     THEN("all neighbours must be an invalid index") {
@@ -15,7 +15,7 @@ SCENARIO("Neighbour coordinate calculation", "[Board]")
     }
   }
 
-  GIVEN("An board with a single cell") {
+  GIVEN("a board with a single cell") {
     Board board(1, 1);
     
     THEN("all neighbours must be an invalid index") {
@@ -26,7 +26,7 @@ SCENARIO("Neighbour coordinate calculation", "[Board]")
     }
   }
 
-  GIVEN("A 3 by 4 Board") {
+  GIVEN("a 3 by 4 Board") {
     Board board(3, 4);
 
     THEN("the north neighbour calculations must be correct") {
@@ -91,6 +91,63 @@ SCENARIO("Neighbour coordinate calculation", "[Board]")
       REQUIRE(board.neighbour(10, Direction::West) == 9);
       REQUIRE(board.neighbour(11, Direction::West) == 10);
       REQUIRE(board.neighbour(12, Direction::West) == board.invalid_index());
+    }
+  }
+}
+
+SCENARIO("Placing walls", "[Board]")
+{
+  GIVEN("a 2 by 2 Board with walls on the edges") {
+    Board board(2, 2);
+    board.place_wall(0, Direction::North);
+    board.place_wall(1, Direction::East);
+    board.place_wall(2, Direction::West);
+    board.place_wall(3, Direction::South);
+    
+    THEN("there must be only the placed walls, nowhere else") {
+      REQUIRE(board.wall_present(0, Direction::North));
+      REQUIRE(!board.wall_present(0, Direction::East));
+      REQUIRE(!board.wall_present(0, Direction::South));
+      REQUIRE(!board.wall_present(0, Direction::West));
+      REQUIRE(!board.wall_present(1, Direction::North));
+      REQUIRE(board.wall_present(1, Direction::East));
+      REQUIRE(!board.wall_present(1, Direction::South));
+      REQUIRE(!board.wall_present(1, Direction::West));
+      REQUIRE(!board.wall_present(2, Direction::North));
+      REQUIRE(!board.wall_present(2, Direction::East));
+      REQUIRE(!board.wall_present(2, Direction::South));
+      REQUIRE(board.wall_present(2, Direction::West));
+      REQUIRE(!board.wall_present(3, Direction::North));
+      REQUIRE(!board.wall_present(3, Direction::East));
+      REQUIRE(board.wall_present(3, Direction::South));
+      REQUIRE(!board.wall_present(3, Direction::West));
+    }
+  }
+
+  GIVEN("a 2 by 2 Board with walls in the middle") {
+    Board board(2, 2);
+    board.place_wall(0, Direction::South);
+    board.place_wall(0, Direction::East);
+    board.place_wall(3, Direction::West);
+    board.place_wall(3, Direction::North);
+
+    THEN("there must be walls on all of the tiles") {
+      REQUIRE(!board.wall_present(0, Direction::North));
+      REQUIRE(board.wall_present(0, Direction::East));
+      REQUIRE(board.wall_present(0, Direction::South));
+      REQUIRE(!board.wall_present(0, Direction::West));
+      REQUIRE(!board.wall_present(1, Direction::North));
+      REQUIRE(!board.wall_present(1, Direction::East));
+      REQUIRE(board.wall_present(1, Direction::South));
+      REQUIRE(board.wall_present(1, Direction::West));
+      REQUIRE(board.wall_present(2, Direction::North));
+      REQUIRE(board.wall_present(2, Direction::East));
+      REQUIRE(!board.wall_present(2, Direction::South));
+      REQUIRE(!board.wall_present(2, Direction::West));
+      REQUIRE(board.wall_present(3, Direction::North));
+      REQUIRE(!board.wall_present(3, Direction::East));
+      REQUIRE(!board.wall_present(3, Direction::South));
+      REQUIRE(board.wall_present(3, Direction::West));
     }
   }
 }

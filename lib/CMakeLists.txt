@@ -1,5 +1,7 @@
 add_library(rdcore SHARED
   board.cpp
+  direction.cpp
+  tile.cpp
 )
 
 set_target_properties(rdcore

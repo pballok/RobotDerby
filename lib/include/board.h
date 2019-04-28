@@ -2,6 +2,7 @@
 #define RDCORE_BOARD_H
 
 #include "direction.h"
+#include "tile.h"
 
 #include <vector>
 
@@ -15,12 +16,16 @@ public:
     Board& operator+(Board&& other) noexcept = delete;
     virtual ~Board() = default;
 
-    std::size_t invalid_index() const noexcept;
+    std::size_t invalid_index() const noexcept { return tiles_.size(); }
     std::size_t neighbour(std::size_t index, Direction direction) const noexcept;
+    void place_wall(std::size_t index, Direction direction) noexcept;
+    bool wall_present(std::size_t index, Direction direction) const noexcept;
 
 private:
     std::size_t size_x_;
-    std::size_t invalid_index_;
+    std::vector<Tile> tiles_;
+
+    void place_single_wall(std::size_t index, Direction direction) noexcept;
 };
 
 #endif // RDCORE_BOARD_H

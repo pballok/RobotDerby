@@ -9,4 +9,6 @@ enum class Direction
     West
 };
 
+Direction opposite_direction(Direction);
+
 #endif // RDCORE_DIRECTION_H
