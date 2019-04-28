@@ -1,0 +1,4 @@
+#ifndef RDCORE_BOARD_H
+#define RDCORE_BOARD_H
+
+#endif // RDCORE_BOARD_H
