@@ -3,6 +3,7 @@
 
 enum class TileFeature
 {
+    Floor,
     NorthWall,
     EastWall,
     SouthWall,

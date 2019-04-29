@@ -1,7 +1,8 @@
 #include "tile.h"
 
 Tile::Tile() noexcept
-    : features_ { {TileFeature::NorthWall, false},
+    : features_ { {TileFeature::Floor, true},
+                  {TileFeature::NorthWall, false},
                   {TileFeature::EastWall, false},
                   {TileFeature::SouthWall, false},
                   {TileFeature::WestWall, false} }
@@ -41,4 +42,16 @@ bool Tile::has_wall(Direction direction) const noexcept
     case Direction::West:
         return features_.at(TileFeature::WestWall);
     }
+}
+
+
+void Tile::remove_floor() noexcept
+{
+    features_.at(TileFeature::Floor) = false;
+}
+
+
+bool Tile::has_floor() const noexcept
+{
+    return features_.at(TileFeature::Floor);
 }

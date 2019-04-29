@@ -1,9 +1,9 @@
 #include "board.h"
+#include "robot.h"
 
 #include <catch2/catch.hpp>
 
-SCENARIO("Neighbour coordinate calculation", "[Board]")
-{
+SCENARIO("Neighbour coordinate calculation", "[Board]") {
   GIVEN("an empty board") {
     Board board(0, 0);
     
@@ -95,8 +95,7 @@ SCENARIO("Neighbour coordinate calculation", "[Board]")
   }
 }
 
-SCENARIO("Placing walls", "[Board]")
-{
+SCENARIO("Placing walls", "[Board]") {
   GIVEN("a 2 by 2 Board with walls on the edges") {
     Board board(2, 2);
     board.place_wall(0, Direction::North);
@@ -148,6 +147,67 @@ SCENARIO("Placing walls", "[Board]")
       REQUIRE(!board.wall_present(3, Direction::East));
       REQUIRE(!board.wall_present(3, Direction::South));
       REQUIRE(board.wall_present(3, Direction::West));
+    }
+  }
+}
+
+SCENARIO("Move a Robot", "[Board]") {
+  GIVEN("No obstruction during movement") {
+    Board board(5, 5);
+    Robot robot("Pinky");
+    robot.set_position(1);
+    robot.set_direction(Direction::West);
+    board.move_robot(robot, 2, Direction::East);
+    board.move_robot(robot, 3, Direction::South);
+
+    THEN("Robot moved to correct destination, direction unchanged") {
+      REQUIRE(robot.position() == 18);
+      REQUIRE(robot.direction() == Direction::West);
+    }
+  }
+
+  GIVEN("Walls obstructing movement") {
+    Board board(5, 5);
+    board.place_wall(2, Direction::East);
+    board.place_wall(2, Direction::South);
+    Robot robot("Pinky");
+    robot.set_position(1);
+    robot.set_direction(Direction::West);
+    board.move_robot(robot, 2, Direction::East);
+    board.move_robot(robot, 3, Direction::South);
+
+    THEN("Robot moved as far as it can be, direction unchanged") {
+      REQUIRE(robot.position() == 2);
+      REQUIRE(robot.direction() == Direction::West);
+    }
+  }
+
+  GIVEN("Moving off the Board") {
+    Board board(5, 5);
+    Robot robot("Pinky");
+    robot.set_position(20);
+    robot.set_direction(Direction::West);
+    board.move_robot(robot, 2, Direction::East);
+    board.move_robot(robot, 3, Direction::South);
+
+    THEN("Robot must be rebooted") {
+      REQUIRE(robot.position() == 0);
+      REQUIRE(robot.direction() == Direction::North);
+    }
+  }
+
+  GIVEN("Moving into a hole") {
+    Board board(5, 5);
+    board.remove_floor(13);
+    Robot robot("Pinky");
+    robot.set_position(1);
+    robot.set_direction(Direction::West);
+    board.move_robot(robot, 2, Direction::East);
+    board.move_robot(robot, 3, Direction::South);
+
+    THEN("Robot must be rebooted") {
+      REQUIRE(robot.position() == 0);
+      REQUIRE(robot.direction() == Direction::North);
     }
   }
 }
