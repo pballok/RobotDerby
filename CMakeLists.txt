@@ -22,10 +22,13 @@ set(CATCH2_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/src/catch2/single_include)
 
 set(ALL_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/lib/*.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/qt_gui/*.cpp
 )
 
 set(ALL_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/lib/include/*.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/qt_gui/*.h
+
 )
 
 set(ALL_TEST_SOURCES
@@ -106,3 +109,4 @@ add_custom_target(
 enable_testing()
 
 add_subdirectory(lib)
+add_subdirectory(qt_gui)
