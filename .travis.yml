@@ -1,0 +1,145 @@
+language: cpp
+dist: trusty
+
+branches:
+  only:
+    - master
+    - dev
+
+before_install:
+  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
+install:
+  - |
+    if [ "$TEST" == "Astyle Format" ]; then
+      travis_retry wget --quiet https://sourceforge.net/projects/astyle/files/astyle/astyle%203.1/astyle_3.1_linux.tar.gz/download
+      tar xzf download
+      cd astyle/build/clang && make
+      export PATH="${TRAVIS_BUILD_DIR}/astyle/build/clang/bin:${PATH}"
+    fi
+  - |
+    if [ "$TEST" == "CppCheck" ]; then
+      travis_retry wget --quiet https://github.com/danmar/cppcheck/archive/1.87.zip
+      unzip 1.87.zip
+      cd cppcheck-1.87 && make SRCDIR=build CFGDIR=/usr/share/cppcheck/
+      sudo make install CFGDIR=/usr/share/cppcheck/
+    fi
+
+before_script:
+  - cd ${TRAVIS_BUILD_DIR}
+  - mkdir build
+  - cd build
+
+matrix:
+  include:
+
+  - os: linux
+    env:
+      - TEST="G++ 7"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - g++-7
+    script:
+      - g++-7 --version
+      - cmake -DCMAKE_CXX_COMPILER="g++-7" ..
+      - make
+      - make test
+
+  - os: linux
+    env:
+      - TEST="Clang++ 7"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - llvm-toolchain-trusty-7
+        packages:
+          - clang-7
+          - g++-7
+    script:
+      - clang++-7 --version
+      - cmake -DCMAKE_CXX_COMPILER="clang++-7" ..
+      - make
+      - make test
+
+  # - os: linux
+  #   env:
+  #     - TEST="Google Address Sanitizer"
+  #   addons:
+  #     apt:
+  #       sources:
+  #         - ubuntu-toolchain-r-test
+  #       packages:
+  #         - g++-7
+  #   script:
+  #     - cmake -DENABLE_ASAN=ON -DCMAKE_CXX_COMPILER="g++-7" ..
+  #     - make
+  #     - make test
+
+  - os: linux
+    env:
+      - TEST="CppCheck"
+    script:
+      - cppcheck --version
+      - cmake ..
+      - make cppcheck
+
+  - os: linux
+    env:
+      - TEST="Git DiffCheck"
+    script:
+      - |
+        if [[ -n $(git diff --check HEAD^) ]]; then
+          echo "You must remove whitespace before merging to master"
+          echo ""
+          git diff --check HEAD^
+          exit -1
+        fi
+
+  - os: linux
+    env:
+      - TEST="Astyle Format"
+    script:
+      - astyle --version
+      - cmake ..
+      - make astyle
+      - |
+        if [[ -n $(git diff) ]]; then
+          echo "You must run make format before merging to master"
+          echo ""
+          git diff
+          exit -1
+        fi
+
+  - os: linux
+    env:
+      - TEST="Clang Tidy"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - llvm-toolchain-trusty-7
+        packages:
+          - clang-7
+          - clang-tidy-7
+          - g++-7
+
+    script:
+      - clang-tidy-7 --version
+      - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_CXX_COMPILER=clang++ ..
+      - make
+      - make tidy > output.txt
+      - |
+        if [[ -n $(grep "warning: " output.txt) ]] || [[ -n $(grep "error: " output.txt) ]]; then
+            echo "You must pass the clang tidy checks before merging to master"
+            echo ""
+            grep --color -E "^|warning: |error: " output.txt
+            exit -1
+        else
+            echo "Passed clang-tidy"
+        fi

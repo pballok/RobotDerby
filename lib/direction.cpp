@@ -11,5 +11,8 @@ Direction opposite_direction(Direction direction)
       return Direction::North;
     case Direction::West:
       return Direction::East;
+    default:
+      // No other directions possible
+      return direction;
   }
 }

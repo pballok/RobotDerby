@@ -28,6 +28,9 @@ void Tile::place_wall(Direction direction) noexcept
     case Direction::West:
       features_.at(TileFeature::WestWall) = true;
       break;
+    default:
+      // No other directions possible
+      break;
   }
 }
 
@@ -43,6 +46,9 @@ bool Tile::has_wall(Direction direction) const noexcept
       return features_.at(TileFeature::SouthWall);
     case Direction::West:
       return features_.at(TileFeature::WestWall);
+    default:
+      // No other directions possible
+      return false;
   }
 }
 

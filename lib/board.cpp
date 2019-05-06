@@ -24,6 +24,9 @@ Board::position_type Board::neighbour(Board::position_type index, Direction dire
       return (index < invalid_index() - size_x_ ? index + size_x_ : invalid_index());
     case Direction::West:
       return (index % size_x_ != 0 ? index - 1 : invalid_index());
+    default:
+      // No other direction possible
+      return index;
   }
 }
 
