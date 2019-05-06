@@ -10,7 +10,7 @@ PrCardMove::PrCardMove(Board& board, Robot& robot, std::size_t move_amount) noex
 
 }
 
-
+// cppcheck-suppress unusedFunction
 void PrCardMove::execute() noexcept
 {
   board_.move_robot(robot_, move_amount_, robot_.direction());

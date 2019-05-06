@@ -1,5 +1,6 @@
 #include "robot.h"
 
+// cppcheck-suppress passedByValue
 Robot::Robot(std::string name) noexcept
   : name_(std::move(name)),
     position_on_board_(0),
