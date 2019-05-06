@@ -2,14 +2,14 @@
 
 Direction opposite_direction(Direction direction)
 {
-    switch(direction) {
+  switch (direction) {
     case Direction::North:
-        return Direction::South;
+      return Direction::South;
     case Direction::East:
-        return Direction::West;
+      return Direction::West;
     case Direction::South:
-        return Direction::North;
+      return Direction::North;
     case Direction::West:
-        return Direction::East;
-    }
+      return Direction::East;
+  }
 }

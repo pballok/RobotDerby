@@ -25,7 +25,6 @@ set(ALL_SOURCES
 )
 
 set(ALL_HEADERS
-  ${CMAKE_CURRENT_SOURCE_DIR}/lib/*.h
   ${CMAKE_CURRENT_SOURCE_DIR}/lib/include/*.h
 )
 
@@ -45,7 +44,6 @@ set(CPPCHECK_ARGS
   --verbose
   --error-exitcode=1
   --language=c++
-  --suppressions-list=${CMAKE_SOURCE_DIR}/cppcheck-suppressions.txt
   --inline-suppr
   -DMAIN=main
   -I ${CMAKE_SOURCE_DIR}/lib/include

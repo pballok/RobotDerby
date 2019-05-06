@@ -3,10 +3,11 @@
 
 #include <catch2/catch.hpp>
 
-SCENARIO("Neighbour coordinate calculation", "[Board]") {
+SCENARIO("Neighbour coordinate calculation", "[Board]")
+{
   GIVEN("an empty board") {
     Board board(0, 0);
-    
+
     THEN("all neighbours must be an invalid index") {
       REQUIRE(board.neighbour(0, Direction::North) == board.invalid_index());
       REQUIRE(board.neighbour(0, Direction::East) == board.invalid_index());
@@ -17,7 +18,7 @@ SCENARIO("Neighbour coordinate calculation", "[Board]") {
 
   GIVEN("a board with a single cell") {
     Board board(1, 1);
-    
+
     THEN("all neighbours must be an invalid index") {
       REQUIRE(board.neighbour(0, Direction::North) == board.invalid_index());
       REQUIRE(board.neighbour(0, Direction::East) == board.invalid_index());
@@ -95,14 +96,15 @@ SCENARIO("Neighbour coordinate calculation", "[Board]") {
   }
 }
 
-SCENARIO("Placing walls", "[Board]") {
+SCENARIO("Placing walls", "[Board]")
+{
   GIVEN("a 2 by 2 Board with walls on the edges") {
     Board board(2, 2);
     board.place_wall(0, Direction::North);
     board.place_wall(1, Direction::East);
     board.place_wall(2, Direction::West);
     board.place_wall(3, Direction::South);
-    
+
     THEN("there must be only the placed walls, nowhere else") {
       REQUIRE(board.wall_present(0, Direction::North));
       REQUIRE(!board.wall_present(0, Direction::East));
@@ -151,7 +153,8 @@ SCENARIO("Placing walls", "[Board]") {
   }
 }
 
-SCENARIO("Move a Robot", "[Board]") {
+SCENARIO("Move a Robot", "[Board]")
+{
   GIVEN("No obstruction during movement") {
     Board board(5, 5);
     Robot robot("Pinky");

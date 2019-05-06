@@ -4,8 +4,8 @@
 #include "robot.h"
 
 PrCardMove::PrCardMove(Board& board, Robot& robot, std::size_t move_amount) noexcept
-    : ProgrammingCard(board, robot),
-      move_amount_(move_amount)
+  : ProgrammingCard(board, robot),
+    move_amount_(move_amount)
 {
 
 }
@@ -13,5 +13,5 @@ PrCardMove::PrCardMove(Board& board, Robot& robot, std::size_t move_amount) noex
 
 void PrCardMove::execute() noexcept
 {
-    board_.move_robot(robot_, move_amount_, robot_.direction());
+  board_.move_robot(robot_, move_amount_, robot_.direction());
 }
