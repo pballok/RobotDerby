@@ -1,4 +1,15 @@
-int main(int, char**)
+#include <QApplication>
+
+#include "wndmain.h"
+
+int main(int argc, char** argv)
 {
-    return 0;
+    QApplication app(argc, argv);
+
+    wndMain main_window;
+    main_window.show();
+
+    int return_code = QApplication::exec();
+
+    return return_code;
 }
