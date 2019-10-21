@@ -21,3 +21,7 @@ add_test(
   NAME    TestRDCore
   COMMAND test_rdcore
 )
+
+add_custom_target(run_test_rdcore ALL
+  COMMAND test_rdcore
+)
