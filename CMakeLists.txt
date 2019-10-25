@@ -39,7 +39,7 @@ set(ALL_TEST_HEADERS
 # cppcheck
 # ------------------------------------------------------------------------------
 set(CPPCHECK_ARGS
-  --enable=warning,style,performance,portability,unusedFunction
+  --enable=warning,style,performance,portability
   --std=c++14
   --verbose
   --error-exitcode=1

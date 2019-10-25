@@ -13,7 +13,7 @@ Tile::Tile() noexcept
 }
 
 
-void Tile::place_wall(Direction direction) noexcept
+void Tile::place_wall(Direction direction)
 {
   switch (direction) {
     case Direction::North:
@@ -35,7 +35,7 @@ void Tile::place_wall(Direction direction) noexcept
 }
 
 
-bool Tile::has_wall(Direction direction) const noexcept
+bool Tile::has_wall(Direction direction) const
 {
   switch (direction) {
     case Direction::North:
@@ -53,13 +53,13 @@ bool Tile::has_wall(Direction direction) const noexcept
 }
 
 
-void Tile::remove_floor() noexcept
+void Tile::remove_floor()
 {
   features_.at(TileFeature::Floor) = false;
 }
 
 
-bool Tile::has_floor() const noexcept
+bool Tile::has_floor() const
 {
   return features_.at(TileFeature::Floor);
 }

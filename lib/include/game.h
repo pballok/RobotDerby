@@ -18,9 +18,8 @@ public:
   Game& operator+(Game&& other) = delete;
   ~Game() = default;
 
-  const Board& board() const { return board_; }
-
   void new_player(std::string robot_name, Board::position_type starting_position, Direction starting_direction);
+
 
 private:
   Board board_;

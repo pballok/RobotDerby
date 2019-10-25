@@ -16,11 +16,11 @@ public:
   Tile& operator=(Tile&& other) noexcept = delete;
   virtual ~Tile() = default;
 
-  void place_wall(Direction direction) noexcept;
-  bool has_wall(Direction direction) const noexcept;
+  void place_wall(Direction direction);
+  bool has_wall(Direction direction) const;
 
-  void remove_floor() noexcept;
-  bool has_floor() const noexcept;
+  void remove_floor();
+  bool has_floor() const;
 
 private:
   std::map<TileFeature, bool> features_;
