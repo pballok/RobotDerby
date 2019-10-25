@@ -65,11 +65,11 @@ void Board::move_robot(Robot& robot, unsigned int number_of_steps, Direction dir
 
     auto new_position = neighbour(robot.position(), direction);
     if (new_position == invalid_index() || !tiles_.at(new_position).has_floor()) {
-      robot.reboot();
+      robot.reboot(0, Direction::North);
       return;
     }
 
-    robot.set_position(new_position);
+    robot.move_to(new_position);
   }
 }
 

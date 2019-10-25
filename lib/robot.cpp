@@ -1,16 +1,15 @@
 #include "robot.h"
 
 // cppcheck-suppress passedByValue
-Robot::Robot(std::string name) noexcept
+Robot::Robot(std::string name, std::size_t starting_position, Direction starting_direction) noexcept
   : name_(std::move(name)),
-    position_on_board_(0),
-    direction_(Direction::North)
+    position_on_board_(starting_position),
+    direction_(starting_direction)
 {
-
 }
 
-void Robot::reboot() noexcept
+void Robot::reboot(std::size_t starting_position, Direction starting_direction) noexcept
 {
-  set_position(0);
-  set_direction(Direction::North);
+  move_to(starting_position);
+  set_direction(starting_direction);
 }

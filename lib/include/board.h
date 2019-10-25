@@ -26,6 +26,7 @@ public:
   bool wall_present(position_type index, Direction direction) const noexcept;
   void remove_floor(position_type index) noexcept;
 
+  void new_robot(std::string robot_name, Board::position_type starting_position, Direction starting_direction);
   void move_robot(Robot& robot, unsigned int number_of_steps, Direction direction) const noexcept;
 
 private:

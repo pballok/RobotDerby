@@ -157,9 +157,8 @@ SCENARIO("Move a Robot", "[Board]")
 {
   GIVEN("No obstruction during movement") {
     Board board(5, 5);
-    Robot robot("Pinky");
-    robot.set_position(1);
-    robot.set_direction(Direction::West);
+
+    Robot robot("Pinky", 1, Direction::West);
     board.move_robot(robot, 2, Direction::East);
     board.move_robot(robot, 3, Direction::South);
 
@@ -169,27 +168,24 @@ SCENARIO("Move a Robot", "[Board]")
     }
   }
 
-  GIVEN("Walls obstructing movement") {
+  GIVEN("a Wall obstructing movement") {
     Board board(5, 5);
     board.place_wall(2, Direction::East);
     board.place_wall(2, Direction::South);
-    Robot robot("Pinky");
-    robot.set_position(1);
-    robot.set_direction(Direction::West);
+
+    Robot robot("Pinky", 1, Direction::West);
     board.move_robot(robot, 2, Direction::East);
     board.move_robot(robot, 3, Direction::South);
 
-    THEN("Robot moved as far as it can be, direction unchanged") {
+    THEN("Robot moved as far as it can, its direction unchanged") {
       REQUIRE(robot.position() == 2);
       REQUIRE(robot.direction() == Direction::West);
     }
   }
 
-  GIVEN("Moving off the Board") {
+  GIVEN("Movement leading off the Board") {
     Board board(5, 5);
-    Robot robot("Pinky");
-    robot.set_position(20);
-    robot.set_direction(Direction::West);
+    Robot robot("Pinky", 20, Direction::West);
     board.move_robot(robot, 2, Direction::East);
     board.move_robot(robot, 3, Direction::South);
 
@@ -199,12 +195,10 @@ SCENARIO("Move a Robot", "[Board]")
     }
   }
 
-  GIVEN("Moving into a hole") {
+  GIVEN("Movement leading into a hole") {
     Board board(5, 5);
     board.remove_floor(13);
-    Robot robot("Pinky");
-    robot.set_position(1);
-    robot.set_direction(Direction::West);
+    Robot robot("Pinky", 1, Direction::West);
     board.move_robot(robot, 2, Direction::East);
     board.move_robot(robot, 3, Direction::South);
 
