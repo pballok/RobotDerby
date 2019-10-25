@@ -14,10 +14,10 @@ public:
   using position_type = std::size_t;
 
   Board(std::size_t size_x, std::size_t size_y) noexcept;
-  Board(const Board& other) noexcept = delete;
-  Board(Board&& other) noexcept = delete;
-  Board& operator=(const Board& other) noexcept = delete;
-  Board& operator=(Board&& other) noexcept = delete;
+  Board(const Board& other) = delete;
+  Board(Board&& other) = delete;
+  Board& operator=(const Board& other) = delete;
+  Board& operator=(Board&& other) = delete;
   virtual ~Board() = default;
 
   position_type invalid_index() const noexcept { return tiles_.size(); }
@@ -26,7 +26,6 @@ public:
   bool wall_present(position_type index, Direction direction) const noexcept;
   void remove_floor(position_type index) noexcept;
 
-  void new_robot(std::string robot_name, Board::position_type starting_position, Direction starting_direction);
   void move_robot(Robot& robot, unsigned int number_of_steps, Direction direction) const noexcept;
 
 private:

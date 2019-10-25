@@ -1,14 +1,12 @@
 #include "game.h"
-#include "robot.h"
+#include "player.h"
 
-#include <memory>
-
-Game::Game(std::size_t board_size_x, std::size_t board_size_y)
+Game::Game(std::size_t board_size_x, std::size_t board_size_y) noexcept
   : board_(board_size_x, board_size_y)
 {
 }
 
-void Game::new_robot(std::string robot_name, Board::position_type starting_position, Direction starting_direction)
+void Game::new_player(std::string robot_name, Board::position_type starting_position, Direction starting_direction)
 {
-  robots_.emplace_back(robot_name, starting_position, starting_direction);
+  players_.emplace_back(std::move(robot_name), starting_position, starting_direction);
 }

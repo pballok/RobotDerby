@@ -9,10 +9,10 @@ class Robot
 {
 public:
   Robot(std::string name, std::size_t starting_position, Direction starting_direction) noexcept;
-  Robot(const Robot& other) noexcept = delete;
-  Robot(Robot&& other) noexcept = delete;
-  Robot& operator=(const Robot& other) noexcept = delete;
-  Robot& operator=(Robot&& other) noexcept = delete;
+  Robot(const Robot& other) = default;
+  Robot(Robot&& other) = default;
+  Robot& operator=(const Robot& other) = delete;
+  Robot& operator=(Robot&& other) = delete;
   virtual ~Robot() = default;
 
   void move_to(std::size_t new_position) noexcept { position_on_board_ = new_position; }
