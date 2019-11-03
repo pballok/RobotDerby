@@ -4,6 +4,7 @@ add_library(rdcore SHARED
   game.cpp
   player.cpp
   prcardmove.cpp
+  prcardturn.cpp
   robot.cpp
   tile.cpp
 )

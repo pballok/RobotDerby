@@ -18,7 +18,10 @@ public:
   void move_to(std::size_t new_position) noexcept { position_on_board_ = new_position; }
   std::size_t position() const noexcept { return position_on_board_; }
 
-  void set_direction(Direction direction) noexcept { direction_ = direction; }
+  void turn_to_direction(Direction direction) noexcept { direction_ = direction; }
+  void turn_clockwise() noexcept { direction_ = clockwise_direction(direction_); }
+  void turn_counter_clockwise() noexcept { direction_ = counter_clockwise_direction(direction_); }
+  void turn_back() noexcept { direction_ = opposite_direction(direction_); }
   Direction direction() const noexcept { return direction_; }
 
   void reboot(std::size_t starting_position, Direction starting_direction) noexcept;

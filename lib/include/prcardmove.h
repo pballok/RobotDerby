@@ -5,6 +5,8 @@
 
 #include <cstddef>
 
+class Board;
+
 class PrCardMove : public ProgrammingCard
 {
 public:
@@ -18,6 +20,7 @@ public:
   void execute() noexcept override;
 
 private:
+  Board& board_;
   std::size_t move_amount_;
 };
 #endif // RDCORE_PRCARDMOVE_H

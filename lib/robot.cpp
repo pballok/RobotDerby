@@ -11,5 +11,5 @@ Robot::Robot(std::string name, std::size_t starting_position, Direction starting
 void Robot::reboot(std::size_t starting_position, Direction starting_direction) noexcept
 {
   move_to(starting_position);
-  set_direction(starting_direction);
+  turn_to_direction(starting_direction);
 }

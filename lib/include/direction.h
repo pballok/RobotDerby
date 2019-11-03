@@ -8,6 +8,8 @@ enum class Direction {
   West
 };
 
-Direction opposite_direction(Direction);
+Direction opposite_direction(Direction direction);
+Direction clockwise_direction(Direction direction);
+Direction counter_clockwise_direction(Direction direction);
 
 #endif // RDCORE_DIRECTION_H
