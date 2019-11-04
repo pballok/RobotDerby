@@ -1,6 +1,8 @@
 add_executable(test_rdcore
-  test_main.cpp
   test_board.cpp
+  test_main.cpp
+  test_prcardmove.cpp
+  test_prcardturn.cpp
 )
 
 target_link_libraries(test_rdcore
