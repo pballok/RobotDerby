@@ -56,6 +56,14 @@ void Board::remove_floor(position_type index) noexcept
 }
 
 
+void Board::place_gear(position_type index, TurnDirection direction) noexcept
+{
+  if (index < invalid_index()) {
+    tiles_.at(index).place_gear(direction);
+  }
+}
+
+
 void Board::move_robot(Robot& robot, unsigned int number_of_steps, Direction direction) const noexcept
 {
   for (unsigned int i = 0; i < number_of_steps; ++i) {

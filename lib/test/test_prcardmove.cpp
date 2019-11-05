@@ -1,4 +1,5 @@
 #include "board.h"
+#include "direction.h"
 #include "prcardmove.h"
 #include "robot.h"
 

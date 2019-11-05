@@ -24,7 +24,10 @@ public:
   position_type neighbour(position_type index, Direction direction) const noexcept;
   void place_wall(position_type index, Direction direction) noexcept;
   bool wall_present(position_type index, Direction direction) const noexcept;
+
   void remove_floor(position_type index) noexcept;
+
+  void place_gear(position_type index, TurnDirection direction) noexcept;
 
   void move_robot(Robot& robot, unsigned int number_of_steps, Direction direction) const noexcept;
 

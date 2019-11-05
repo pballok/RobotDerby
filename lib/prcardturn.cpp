@@ -2,23 +2,13 @@
 
 #include "robot.h"
 
-PrCardTurn::PrCardTurn(Robot& robot, TurnCardType turn_type) noexcept
+PrCardTurn::PrCardTurn(Robot& robot, TurnDirection direction) noexcept
   : ProgrammingCard(robot),
-    type_(turn_type)
+    direction_(direction)
 {
 }
 
 void PrCardTurn::execute() noexcept
 {
-  switch(type_) {
-    case TurnCardType::CLOCKWISE:
-      robot_.turn_clockwise();
-      break;
-    case TurnCardType::COUNTER_CLOCKWISE:
-      robot_.turn_counter_clockwise();
-      break;
-    case TurnCardType::U_TURN:
-      robot_.turn_back();
-      break;
-  }
+  robot_.turn(direction_);
 }

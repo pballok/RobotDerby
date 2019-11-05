@@ -6,7 +6,9 @@ enum class TileFeature {
   NorthWall,
   EastWall,
   SouthWall,
-  WestWall
+  WestWall,
+  GearClockwise,
+  GearCounterClockwise
 };
 
 #endif // RDCORE_TILEFEATURE_H

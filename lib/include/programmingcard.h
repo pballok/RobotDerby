@@ -6,7 +6,7 @@ class Robot;
 class ProgrammingCard
 {
 public:
-  ProgrammingCard(Robot& robot) noexcept : robot_(robot) {}
+  explicit ProgrammingCard(Robot& robot) noexcept : robot_(robot) {}
   ProgrammingCard(const ProgrammingCard& other) noexcept = delete;
   ProgrammingCard(ProgrammingCard&& other) noexcept = delete;
   ProgrammingCard& operator=(const ProgrammingCard& other) noexcept = delete;

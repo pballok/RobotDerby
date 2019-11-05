@@ -1,6 +1,6 @@
 #include "direction.h"
 
-Direction opposite_direction(Direction direction)
+Direction opposite_direction(Direction direction) noexcept
 {
   switch (direction) {
     case Direction::North:
@@ -17,7 +17,7 @@ Direction opposite_direction(Direction direction)
   }
 }
 
-Direction clockwise_direction(Direction direction)
+Direction clockwise_direction(Direction direction) noexcept
 {
   switch (direction) {
     case Direction::North:
@@ -34,7 +34,7 @@ Direction clockwise_direction(Direction direction)
   }
 }
 
-Direction counter_clockwise_direction(Direction direction)
+Direction counter_clockwise_direction(Direction direction) noexcept
 {
   switch (direction) {
     case Direction::North:

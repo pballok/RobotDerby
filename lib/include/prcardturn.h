@@ -5,17 +5,12 @@
 
 #include <cstddef>
 
-enum class TurnCardType
-{
-  CLOCKWISE,
-  COUNTER_CLOCKWISE,
-  U_TURN
-};
+enum class TurnDirection;
 
 class PrCardTurn : public ProgrammingCard
 {
 public:
-  PrCardTurn(Robot& robot, TurnCardType turn_type) noexcept;
+  PrCardTurn(Robot& robot, TurnDirection direction) noexcept;
   PrCardTurn(const PrCardTurn& other) noexcept = delete;
   PrCardTurn(PrCardTurn&& other) noexcept = delete;
   PrCardTurn& operator=(const PrCardTurn& other) noexcept = delete;
@@ -25,6 +20,7 @@ public:
   void execute() noexcept override;
 
 private:
-  TurnCardType type_;
+  TurnDirection direction_;
 };
+
 #endif // RDCORE_PRCARDTURN_H

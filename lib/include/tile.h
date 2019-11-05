@@ -22,6 +22,9 @@ public:
   void remove_floor();
   bool has_floor() const;
 
+  void place_gear(TurnDirection direction);
+  bool has_gear(TurnDirection direction);
+
 private:
   std::map<TileFeature, bool> features_;
 };
