@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -7,12 +7,12 @@ project(RobotDerby CXX)
 include(ExternalProject)
 find_package(Git REQUIRED)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -Werror -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Werror -fPIC")
 
 ExternalProject_Add(
     catch2
     GIT_REPOSITORY      https://github.com/catchorg/Catch2
-    GIT_TAG             v2.7.2
+    GIT_TAG             v2.13.4
     PREFIX              ${CMAKE_SOURCE_DIR}/external
     CONFIGURE_COMMAND   ""
     BUILD_COMMAND       ""
@@ -40,7 +40,7 @@ set(ALL_TEST_HEADERS
 # ------------------------------------------------------------------------------
 set(CPPCHECK_ARGS
   --enable=warning,style,performance,portability
-  --std=c++14
+  --std=c++17
   --verbose
   --error-exitcode=1
   --language=c++

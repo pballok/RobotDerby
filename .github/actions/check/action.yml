@@ -1,0 +1,17 @@
+name: "Check"
+description: "Run various checks based on CMake targets"
+author: "pballok@gmail.com"
+
+inputs:
+  PKG_NAME:
+    description: "name of ubuntu package to install"
+    required: true
+    default: "cppcheck"
+  CHECK_TARGET:
+    description: "name of CMake target that runs the check"
+    required: true
+    default: "cppcheck"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"

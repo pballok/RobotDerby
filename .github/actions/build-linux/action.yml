@@ -1,0 +1,21 @@
+name: "Build on Linux"
+description: "Build a C++ project with CMake on Linux"
+author: "pballok@gmail.com"
+
+inputs:
+  COMPILER_PKG:
+    description: "name of Ubuntu compiler package"
+    required: true
+    default: "clang"
+  CC:
+    description: "C compiler id"
+    required: true
+    default: "clang"
+  CXX:
+    description: "C++ compiler id"
+    required: true
+    default: "clang++"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"

@@ -1,0 +1,79 @@
+name: All Checks
+on: push
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build-linux-gcc-10:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build with GCC 10
+        uses: ./.github/actions/build-linux
+        with:
+           COMPILER_PKG: "g++-10"
+           CC: "gcc-10"
+           CXX: "g++-10"
+
+  build-linux-gcc-9:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build with GCC 9
+        uses: ./.github/actions/build-linux
+        with:
+           COMPILER_PKG: "g++-9"
+           CC: "gcc-9"
+           CXX: "g++-9"
+
+  build-linux-clang-10:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build with Clang 10
+        uses: ./.github/actions/build-linux
+        with:
+           COMPILER_PKG: "clang-10"
+           CC: "clang-10"
+           CXX: "clang++-10"
+
+  build-linux-clang-9:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build with Clang 9
+        uses: ./.github/actions/build-linux
+        with:
+           COMPILER_PKG: "clang-9"
+           CC: "clang-9"
+           CXX: "clang++-9"
+
+  cppcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: cppcheck
+        uses: ./.github/actions/check
+        with:
+          PKG_NAME: "cppcheck"
+          CHECK_TARGET: "cppcheck"
+
+  clang-tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: clang-tidy
+        uses: ./.github/actions/check
+        with:
+          PKG_NAME: "clang-tidy"
+          CHECK_TARGET: "tidy"
