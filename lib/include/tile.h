@@ -16,14 +16,14 @@ public:
   Tile& operator=(Tile&& other) noexcept = delete;
   virtual ~Tile() = default;
 
-  void place_wall(Direction direction);
-  bool has_wall(Direction direction) const;
+  void placeWall(Direction direction);
+  bool hasWall(Direction direction) const;
 
-  void remove_floor();
-  bool has_floor() const;
+  void removeFloor();
+  bool hasFloor() const;
 
-  void place_gear(TurnDirection direction);
-  bool has_gear(TurnDirection direction);
+  void placeGear(TurnDirection direction);
+  bool hasGear(TurnDirection direction);
 
 private:
   std::map<TileFeature, bool> features_;

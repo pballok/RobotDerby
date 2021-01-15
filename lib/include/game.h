@@ -4,7 +4,6 @@
 #include "board.h"
 
 #include <string>
-#include <vector>
 
 class Player;
 
@@ -18,12 +17,8 @@ public:
   Game& operator+(Game&& other) = delete;
   ~Game() = default;
 
-  void new_player(std::string robot_name, Board::position_type starting_position, Direction starting_direction);
-
-
 private:
   Board board_;
-  std::vector<Player> players_;
 };
 
 #endif // RDCORE_GAME_H

@@ -1,5 +1,7 @@
 add_executable(test_rdcore
   test_board.cpp
+  test_board_robot_movement.cpp
+  test_board_walls.cpp
   test_main.cpp
   test_prcardmove.cpp
   test_prcardturn.cpp

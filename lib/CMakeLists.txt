@@ -2,7 +2,6 @@ add_library(rdcore SHARED
   board.cpp
   direction.cpp
   game.cpp
-  player.cpp
   prcardmove.cpp
   prcardturn.cpp
   robot.cpp

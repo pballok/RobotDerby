@@ -41,7 +41,6 @@ set(ALL_TEST_HEADERS
 set(CPPCHECK_ARGS
   --enable=warning,style,performance,portability
   --std=c++17
-  --verbose
   --error-exitcode=1
   --language=c++
   --inline-suppr

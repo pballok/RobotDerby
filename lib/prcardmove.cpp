@@ -3,14 +3,18 @@
 #include "board.h"
 #include "robot.h"
 
-PrCardMove::PrCardMove(Board& board, Robot& robot, std::size_t move_amount) noexcept
-  : ProgrammingCard(robot),
-    board_(board),
+PrCardMove::PrCardMove(Board& board, Board::robot_index_type robot_index, std::size_t move_amount) noexcept
+  : ProgrammingCard(board, robot_index),
     move_amount_(move_amount)
 {
 }
 
 void PrCardMove::execute() noexcept
 {
-  board_.move_robot(robot_, move_amount_, robot_.direction());
+  auto robot = board_.robotWithIndex(robot_index_);
+  if(robot == nullptr) {
+    return;
+  }
+
+  board_.moveRobot(robot_index_, move_amount_, robot->direction());
 }

@@ -8,25 +8,26 @@ enum class Direction;
 class Robot
 {
 public:
-  Robot(std::string name, std::size_t starting_position, Direction starting_direction) noexcept;
+  enum class State { Active, Rebooting };
+
+  Robot(std::string&& name, Direction starting_direction) noexcept;
   Robot(const Robot& other) = default;
   Robot(Robot&& other) = default;
   Robot& operator=(const Robot& other) = delete;
   Robot& operator=(Robot&& other) = delete;
   virtual ~Robot() = default;
 
-  void move_to(std::size_t new_position) noexcept { position_on_board_ = new_position; }
-  std::size_t position() const noexcept { return position_on_board_; }
+  State state() const noexcept { return state_; }
 
   void turn(TurnDirection direction) noexcept;
   void turn_to(Direction direction) noexcept { direction_ = direction; }
   Direction direction() const noexcept { return direction_; }
 
-  void reboot(std::size_t starting_position, Direction starting_direction) noexcept;
+  void reboot(Direction starting_direction) noexcept;
 
 private:
   std::string name_;
-  std::size_t position_on_board_;
+  State state_;
   Direction direction_;
 };
 

@@ -1,14 +1,20 @@
 #include "prcardturn.h"
 
+#include "board.h"
 #include "robot.h"
 
-PrCardTurn::PrCardTurn(Robot& robot, TurnDirection direction) noexcept
-  : ProgrammingCard(robot),
+PrCardTurn::PrCardTurn(Board& board, Board::robot_index_type robot_index, TurnDirection direction) noexcept
+  : ProgrammingCard(board, robot_index),
     direction_(direction)
 {
 }
 
 void PrCardTurn::execute() noexcept
 {
-  robot_.turn(direction_);
+  auto robot = board_.robotWithIndex(robot_index_);
+  if(robot == nullptr) {
+    return;
+  }
+
+  robot->turn(direction_);
 }

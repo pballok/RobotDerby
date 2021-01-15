@@ -1,92 +1,145 @@
 #include "board.h"
 #include "robot.h"
 
+#include <memory>
+
 Board::Board(std::size_t size_x, std::size_t size_y) noexcept
   : size_x_(size_x),
-    tiles_(size_x * size_y)
+    invalid_position_index_(size_x * size_y),
+    tiles_(invalid_position_index_)
 {
 
 }
 
 
-Board::position_type Board::neighbour(Board::position_type index, Direction direction) const noexcept
+Board::position_type Board::neighbour(Board::position_type position_index, Direction direction) const noexcept
 {
-  if (index >= invalid_index() || invalid_index() <= 1) {
-    return invalid_index();
+  if (position_index >= invalid_position_index_ || invalid_position_index_ <= 1) {
+    return invalid_position_index_;
   }
 
   switch (direction) {
     case Direction::North:
-      return (index >= size_x_ ? index - size_x_ : invalid_index());
+      return (position_index >= size_x_ ? position_index - size_x_ : invalid_position_index_);
     case Direction::East:
-      return (index % size_x_ < size_x_ - 1 ? index + 1 : invalid_index());
+      return (position_index % size_x_ < size_x_ - 1 ? position_index + 1 : invalid_position_index_);
     case Direction::South:
-      return (index < invalid_index() - size_x_ ? index + size_x_ : invalid_index());
+      return (position_index < invalid_position_index_ - size_x_ ? position_index + size_x_ : invalid_position_index_);
     case Direction::West:
-      return (index % size_x_ != 0 ? index - 1 : invalid_index());
+      return (position_index % size_x_ != 0 ? position_index - 1 : invalid_position_index_);
     default:
       // No other direction possible
-      return index;
+      return position_index;
   }
 }
 
 
-void Board::place_wall(Board::position_type index, Direction direction) noexcept
+void Board::placeWall(Board::position_type position_index, Direction direction) noexcept
 {
-  place_single_wall(index, direction);
-  place_single_wall(neighbour(index, direction), opposite_direction(direction));
+  placeSingleWall(position_index, direction);
+  placeSingleWall(neighbour(position_index, direction), opposite_direction(direction));
 }
 
 
-bool Board::wall_present(Board::position_type index, Direction direction) const noexcept
+bool Board::wallPresent(Board::position_type position_index, Direction direction) const noexcept
 {
-  if (index >= invalid_index()) {
+  if (position_index >= invalid_position_index_) {
     return false;
   }
 
-  return tiles_.at(index).has_wall(direction);
+  return tiles_.at(position_index).hasWall(direction);
 }
 
 
-void Board::remove_floor(position_type index) noexcept
+void Board::removeFloor(position_type position_index) noexcept
 {
-  if (index < invalid_index()) {
-    tiles_.at(index).remove_floor();
+  if (position_index < invalid_position_index_) {
+    tiles_.at(position_index).removeFloor();
   }
 }
 
 
-void Board::place_gear(position_type index, TurnDirection direction) noexcept
+void Board::placeGear(position_type position_index, TurnDirection direction) noexcept
 {
-  if (index < invalid_index()) {
-    tiles_.at(index).place_gear(direction);
+  if (position_index < invalid_position_index_) {
+    tiles_.at(position_index).placeGear(direction);
   }
 }
 
-
-void Board::move_robot(Robot& robot, unsigned int number_of_steps, Direction direction) const noexcept
+Board::robot_index_type Board::placeNewRobot(std::string&& name, position_type starting_position, Direction starting_direction)
 {
+  robots_.emplace_back(std::move(name), starting_position, starting_direction);
+  return robots_.size();
+}
+
+
+Board::position_type Board::moveRobot(robot_index_type robot_index, unsigned int number_of_steps, Direction direction) noexcept
+{
+  auto current_position = robotPosition(robot_index);
+  if(current_position == invalid_position_index_) {
+    return invalid_position_index_;
+  }
+
   for (unsigned int i = 0; i < number_of_steps; ++i) {
-    if (tiles_.at(robot.position()).has_wall(direction)) {
-      return;
+    if (tiles_.at(current_position).hasWall(direction)) {
+      return current_position;
     }
 
-    auto new_position = neighbour(robot.position(), direction);
-    if (new_position == invalid_index() || !tiles_.at(new_position).has_floor()) {
-      robot.reboot(0, Direction::North);
-      return;
+    auto new_position = neighbour(current_position, direction);
+    auto r = robotWithIndex(robot_index);
+    if (new_position == invalid_position_index_ || !tiles_.at(new_position).hasFloor()) {
+      r->reboot(Direction::North);
+      placeRobot(robot_index, 0);  // Reboot token position goes here
+      return 0;  // Reboot token position goes here
     }
 
-    robot.move_to(new_position);
+    placeRobot(robot_index, new_position);
+    current_position = new_position;
   }
+
+  return current_position;
 }
 
 
-void Board::place_single_wall(Board::position_type index, Direction direction) noexcept
+Board::position_type Board::robotPosition(robot_index_type robot_index) const noexcept
 {
-  if (index >= invalid_index()) {
+  if(robot_index == 0 || robot_index > robots_.size()) {
+    return invalid_position_index_;
+  }
+
+  return robots_.at(robot_index - 1).position;
+}
+
+
+Robot* Board::robotWithIndex(robot_index_type robot_index) noexcept
+{
+  if(robot_index == 0 || robot_index > robots_.size()) {
+    return nullptr;
+  }
+
+  return robots_.at(robot_index - 1).robot.get();
+}
+
+
+void Board::placeSingleWall(Board::position_type position_index, Direction direction) noexcept
+{
+  if (position_index >= invalid_position_index_) {
     return;
   }
 
-  tiles_.at(index).place_wall(direction);
+  tiles_.at(position_index).placeWall(direction);
+}
+
+
+void Board::placeRobot(robot_index_type robot_index, position_type position_index) noexcept
+{
+  if(robot_index == 0 || robot_index > robots_.size()) {
+    return;
+  }
+
+  if (position_index >= invalid_position_index_) {
+    return;
+  }
+
+  robots_.at(robot_index - 1).position = position_index;
 }

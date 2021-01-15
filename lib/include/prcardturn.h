@@ -3,14 +3,12 @@
 
 #include "programmingcard.h"
 
-#include <cstddef>
-
 enum class TurnDirection;
 
 class PrCardTurn : public ProgrammingCard
 {
 public:
-  PrCardTurn(Robot& robot, TurnDirection direction) noexcept;
+  PrCardTurn(Board& board, Board::robot_index_type robot_index, TurnDirection direction) noexcept;
   PrCardTurn(const PrCardTurn& other) noexcept = delete;
   PrCardTurn(PrCardTurn&& other) noexcept = delete;
   PrCardTurn& operator=(const PrCardTurn& other) noexcept = delete;

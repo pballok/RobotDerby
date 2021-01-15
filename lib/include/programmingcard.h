@@ -1,12 +1,12 @@
 #ifndef RDCORE_PROGRAMMINGCARD_H
 #define RDCORE_PROGRAMMINGCARD_H
 
-class Robot;
+#include "board.h"
 
 class ProgrammingCard
 {
 public:
-  explicit ProgrammingCard(Robot& robot) noexcept : robot_(robot) {}
+  ProgrammingCard(Board& board, Board::robot_index_type robot_index) noexcept : board_(board), robot_index_(robot_index) {}
   ProgrammingCard(const ProgrammingCard& other) noexcept = delete;
   ProgrammingCard(ProgrammingCard&& other) noexcept = delete;
   ProgrammingCard& operator=(const ProgrammingCard& other) noexcept = delete;
@@ -16,6 +16,7 @@ public:
   virtual void execute() = 0;
 
 protected:
-  Robot& robot_;
+  Board& board_;
+  Board::robot_index_type robot_index_;
 };
 #endif // RDCORE_PROGRAMMINGCARD_H
