@@ -3,6 +3,7 @@
 #include "board.h"
 #include "robot.h"
 
+// cppcheck-suppress constParameter
 PrCardMove::PrCardMove(Board& board, Board::robot_index_type robot_index, std::size_t move_amount) noexcept
   : ProgrammingCard(board, robot_index),
     move_amount_(move_amount)
@@ -11,7 +12,7 @@ PrCardMove::PrCardMove(Board& board, Board::robot_index_type robot_index, std::s
 
 void PrCardMove::execute() noexcept
 {
-  auto robot = board_.robotWithIndex(robot_index_);
+  auto* robot = board_.robotWithIndex(robot_index_);
   if(robot == nullptr) {
     return;
   }

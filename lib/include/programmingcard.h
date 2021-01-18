@@ -6,6 +6,7 @@
 class ProgrammingCard
 {
 public:
+  // cppcheck-suppress constParameter
   ProgrammingCard(Board& board, Board::robot_index_type robot_index) noexcept : board_(board), robot_index_(robot_index) {}
   ProgrammingCard(const ProgrammingCard& other) noexcept = delete;
   ProgrammingCard(ProgrammingCard&& other) noexcept = delete;

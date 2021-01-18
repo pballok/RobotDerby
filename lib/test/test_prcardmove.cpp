@@ -15,7 +15,7 @@ SCENARIO("Moving a Robot with a Programming Card", "[PrCard]")
     card.execute();
 
     THEN("the Move Card must move the Robot") {
-      auto robot = board.robotWithIndex(robot_index);
+      auto* robot = board.robotWithIndex(robot_index);
       REQUIRE(robot != nullptr);
       REQUIRE(board.robotPosition(robot_index) == 12);
       REQUIRE(robot->direction() == Direction::South);

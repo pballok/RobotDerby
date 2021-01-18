@@ -13,7 +13,7 @@ SCENARIO("Move a Robot", "[Board]")
     board.moveRobot(robot_index, 3, Direction::South);
 
     THEN("Robot moved to correct destination, direction unchanged") {
-      auto robot = board.robotWithIndex(1);
+      auto* robot = board.robotWithIndex(1);
       REQUIRE(robot != nullptr);
       REQUIRE(board.robotPosition(robot_index) == 18);
       REQUIRE(robot->direction() == Direction::West);
@@ -31,7 +31,7 @@ SCENARIO("Move a Robot", "[Board]")
     board.moveRobot(robot_index, 3, Direction::South);
 
     THEN("Robot moved as far as it can, its direction unchanged") {
-      auto robot = board.robotWithIndex(1);
+      auto* robot = board.robotWithIndex(1);
       REQUIRE(robot != nullptr);
       REQUIRE(board.robotPosition(robot_index) == 2);
       REQUIRE(robot->direction() == Direction::West);
@@ -47,7 +47,7 @@ SCENARIO("Move a Robot", "[Board]")
     board.moveRobot(robot_index, 3, Direction::South);
 
     THEN("Robot must be rebooting") {
-      auto robot = board.robotWithIndex(1);
+      auto* robot = board.robotWithIndex(1);
       REQUIRE(robot != nullptr);
       REQUIRE(robot->state() == Robot::State::Rebooting);
     }
@@ -62,7 +62,7 @@ SCENARIO("Move a Robot", "[Board]")
     board.moveRobot(robot_index, 3, Direction::South);
 
     THEN("Robot must be rebooting") {
-      auto robot = board.robotWithIndex(1);
+      auto* robot = board.robotWithIndex(1);
       REQUIRE(robot != nullptr);
       REQUIRE(robot->state() == Robot::State::Rebooting);
     }

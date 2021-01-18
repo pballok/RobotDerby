@@ -1,7 +1,6 @@
 #include "direction.h"
 #include "robot.h"
 
-// cppcheck-suppress passedByValue
 Robot::Robot(std::string&& name, Direction starting_direction) noexcept
   : name_(std::move(name)),
     state_(State::Active),

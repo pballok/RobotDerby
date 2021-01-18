@@ -14,7 +14,7 @@ SCENARIO("Turning a Robot with a Programming Card", "[PrCard]")
     card.execute();
 
     THEN("the Turn Card must turn the Robot to the West") {
-      auto robot = board.robotWithIndex(robot_index);
+      auto* robot = board.robotWithIndex(robot_index);
       REQUIRE(robot != nullptr);
       REQUIRE(board.robotPosition(robot_index) == 2);
       REQUIRE(robot->direction() == Direction::West);
@@ -29,7 +29,7 @@ SCENARIO("Turning a Robot with a Programming Card", "[PrCard]")
     card.execute();
 
     THEN("the Turn Card must turn the Robot to the East") {
-      auto robot = board.robotWithIndex(robot_index);
+      auto* robot = board.robotWithIndex(robot_index);
       REQUIRE(robot != nullptr);
       REQUIRE(board.robotPosition(robot_index) == 2);
       REQUIRE(robot->direction() == Direction::East);
@@ -44,7 +44,7 @@ SCENARIO("Turning a Robot with a Programming Card", "[PrCard]")
     card.execute();
 
     THEN("the Turn Card must turn the Robot to the North") {
-      auto robot = board.robotWithIndex(robot_index);
+      auto* robot = board.robotWithIndex(robot_index);
       REQUIRE(robot != nullptr);
       REQUIRE(board.robotPosition(robot_index) == 2);
       REQUIRE(robot->direction() == Direction::North);

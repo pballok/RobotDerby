@@ -86,7 +86,7 @@ Board::position_type Board::moveRobot(robot_index_type robot_index, unsigned int
     }
 
     auto new_position = neighbour(current_position, direction);
-    auto r = robotWithIndex(robot_index);
+    auto* r = robotWithIndex(robot_index);
     if (new_position == invalid_position_index_ || !tiles_.at(new_position).hasFloor()) {
       r->reboot(Direction::North);
       placeRobot(robot_index, 0);  // Reboot token position goes here

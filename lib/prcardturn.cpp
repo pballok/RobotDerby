@@ -3,6 +3,7 @@
 #include "board.h"
 #include "robot.h"
 
+// cppcheck-suppress constParameter
 PrCardTurn::PrCardTurn(Board& board, Board::robot_index_type robot_index, TurnDirection direction) noexcept
   : ProgrammingCard(board, robot_index),
     direction_(direction)
@@ -11,7 +12,7 @@ PrCardTurn::PrCardTurn(Board& board, Board::robot_index_type robot_index, TurnDi
 
 void PrCardTurn::execute() noexcept
 {
-  auto robot = board_.robotWithIndex(robot_index_);
+  auto* robot = board_.robotWithIndex(robot_index_);
   if(robot == nullptr) {
     return;
   }

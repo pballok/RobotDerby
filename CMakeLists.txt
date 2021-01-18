@@ -93,7 +93,7 @@ add_custom_target(
 list(APPEND CLANG_TIDY_ARGS
   -p=${CMAKE_BINARY_DIR}
   -header-filter='\(bchest/lib/|bchest/client/|bchest/server/\)'
-  -checks='*,-fuchsia-default-arguments,-llvm-header-guard'
+  -checks='*,-fuchsia-default-arguments-calls,-modernize-use-trailing-return-type'
 )
 
 add_custom_target(
